@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>א.א תקשורת, מיגון ואבטחה | התקנת מצלמות אבטחה בכל הארץ</title>
+  <meta name="description" content="א.א תקשורת, מיגון ואבטחה — התקנה, תיקון ושדרוג מצלמות אבטחה ומערכות תקשורת לבית ולעסק. מחיר מראש, התקנה תוך 24 שעות, אחריות 12 חודשים. פריסה ארצית, אזור מודיעין." />
+
+  <script>document.documentElement.classList.add("js");</script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles.css" />
+
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+      }
+    }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+</head>
+<body>
+  <!-- Nav -->
+  <header class="nav" id="nav">
+    <a class="nav__brand" href="#top">א.א <span>תקשורת</span></a>
+    <nav class="nav__links">
+      <a href="#services">שירותים</a>
+      <a href="#system">המערכת</a>
+      <a href="#works">העבודות שלנו</a>
+      <a href="#about">אודות</a>
+      <a href="#reviews">ביקורות</a>
+      <a href="#contact">צור קשר</a>
+    </nav>
+    <a class="nav__phone magnetic" href="tel:0504374571">050-437-4571</a>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero" id="top">
+    <canvas id="scene"></canvas>
+    <div class="hero__scrim" aria-hidden="true"></div>
+    <div class="hero__content" data-hero>
+      <div class="hero__kicker">
+        <span class="dot" aria-hidden="true"></span>
+        <span class="hero__rotator" id="rotator">
+          <span class="is-active">התקנה תוך 24 שעות</span>
+          <span>מחיר מראש בלי הפתעות</span>
+          <span>אחריות טכנית 12 חודשים</span>
+          <span>פריסה ארצית · אזור מודיעין</span>
+        </span>
+      </div>
+      <h1 class="hero__title">מצלמות אבטחה שלא מתנתקות. גם בלילה.</h1>
+      <p class="hero__sub">
+        התקנה, תיקון ושדרוג מערכות מיגון ותקשורת לבית ולעסק. מחיר מראש בלי הפתעות,
+        עבודה נקייה, ואני אצלכם תוך 24 שעות.
+      </p>
+      <div class="hero__cta">
+        <a class="btn btn--primary magnetic" href="#contact">לקבלת ייעוץ חינם</a>
+        <a class="btn btn--ghost magnetic" href="tel:0504374571">חייגו 050-437-4571</a>
+      </div>
+      <p class="hero__trust">
+        מבוסס על <b>127 ביקורות בגוגל</b> · דירוג מעולה · אחריות טכנית 12 חודשים
+      </p>
+    </div>
+    <div class="hero__scrollcue" aria-hidden="true"><span>גלול לגילוי ↓</span></div>
+  </section>
+
+  <!-- Ticker: real slogans -->
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker__track" id="ticker">
+      <span class="ticker__item">התקנה מהיום למחר</span>
+      <span class="ticker__item">מחיר מראש בלי הפתעות</span>
+      <span class="ticker__item">הופכים את הלילה ליום</span>
+      <span class="ticker__item">מערכות יציבות שלא מתנתקות</span>
+      <span class="ticker__item">עבודה נקייה בלי כבלים חשופים</span>
+      <span class="ticker__item">ממשק מלא בעברית</span>
+    </div>
+  </div>
+
+  <!-- Services -->
+  <section class="section services" id="services">
+    <div class="section__head">
+      <span class="section__kicker" data-reveal>כל הפתרונות במקום אחד</span>
+      <h2 class="section__title" data-reveal>מיגון, אבטחה ותקשורת — מקצה לקצה</h2>
+      <p class="section__lead" data-reveal>
+        מ-2016 אנחנו מתכננים, מתקינים ומתחזקים מערכות לבית ולעסק. מתאימים בדיוק לצרכים שלכם,
+        בלי כבלים חשופים ובלי בלגן.
+      </p>
+    </div>
+
+    <div class="services__grid">
+      <div class="services__list">
+        <div class="service" data-reveal>
+          <span class="service__num">01</span>
+          <div class="service__body">
+            <div class="service__name">מצלמות אנליטיקה מבוססות בינה מלאכותית</div>
+            <div class="service__desc">זיהוי אובייקטים חכם והתראות מדויקות — פחות התראות שווא, יותר שקט.</div>
+          </div>
+        </div>
+        <div class="service" data-reveal>
+          <span class="service__num">02</span>
+          <div class="service__body">
+            <div class="service__name">מצלמות בטכנולוגיית LPR</div>
+            <div class="service__desc">זיהוי לוחיות רישוי לכניסות, חניונים ועסקים.</div>
+          </div>
+        </div>
+        <div class="service" data-reveal>
+          <span class="service__num">03</span>
+          <div class="service__body">
+            <div class="service__name">מצלמות גלויות או סמויות במעגל סגור</div>
+            <div class="service__desc">מערכות יציבות שלא מתנתקות, בהתאמה לבית או לעסק.</div>
+          </div>
+        </div>
+        <div class="service" data-reveal>
+          <span class="service__num">04</span>
+          <div class="service__body">
+            <div class="service__name">תשתיות אינטרנט וסיבים אופטיים</div>
+            <div class="service__desc">פריסת תשתית לבית ולעסק, בעבודה מסודרת ונקייה.</div>
+          </div>
+        </div>
+        <div class="service" data-reveal>
+          <span class="service__num">05</span>
+          <div class="service__body">
+            <div class="service__name">פתרונות WiFi בטכנולוגיית MESH</div>
+            <div class="service__desc">מגדילי טווח וכיסוי מלא בכל פינה בבית או במשרד.</div>
+          </div>
+        </div>
+        <div class="service" data-reveal>
+          <span class="service__num">06</span>
+          <div class="service__body">
+            <div class="service__name">ארונות תקשורת, תעלות ורכזות</div>
+            <div class="service__desc">סידור והתקנת ארונות תקשורת, שקעי אינטרנט וטלפוניה.</div>
+          </div>
+        </div>
+        <div class="service" data-reveal>
+          <span class="service__num">07</span>
+          <div class="service__body">
+            <div class="service__name">שקעי אינטרנט, רכזות ושקעי טלפוניה</div>
+            <div class="service__desc">תוספת נקודות רשת וטלפון בבית ובעסק, מסודר ונקי.</div>
+          </div>
+        </div>
+        <div class="service" data-reveal>
+          <span class="service__num">08</span>
+          <div class="service__body">
+            <div class="service__name">התקנת סטרימרים Android TV</div>
+            <div class="service__desc">תמיכה באפליקציות של חברות התקשורת, מוכן לשימוש.</div>
+          </div>
+        </div>
+        <div class="service" data-reveal>
+          <span class="service__num">09</span>
+          <div class="service__body">
+            <div class="service__name">תיקון ושדרוג מערכות קיימות — מהיום להיום</div>
+            <div class="service__desc">S.O.S למצלמות שקרסו, ושדרוג מערכות ישנות למתקדמות.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="services__media">
+        <div class="media" data-img-wrap data-parallax>
+          <img src="./assets/cam-exterior.png" alt="מצלמת אבטחה מותקנת על קיר בית מודרני בשעת בין-ערביים" loading="lazy" />
+          <div class="media__focus" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="feature">
+      <div class="feature__bg" data-img-wrap>
+        <img src="./assets/night-vision.png" alt="חצר מגורים בלילה בראיית לילה ברורה של מצלמת אבטחה" data-parallax loading="lazy" />
+      </div>
+      <div class="feature__inner">
+        <h3 class="feature__title" data-reveal>הופכים את הלילה ליום</h3>
+        <p class="feature__text" data-reveal>
+          ראיית לילה שלא מטשטשת וזיהוי ברור גם בחושך מוחלט. נמאס מאיכות צילום מטושטשת בלילה?
+          זה בדיוק מה שאנחנו פותרים.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Works gallery -->
+  <section class="works" id="works">
+    <div class="works__head">
+      <span class="section__kicker" data-reveal>תוצאה מהשטח</span>
+      <h2 class="section__title" data-reveal>העבודות שלנו</h2>
+    </div>
+    <div class="marquee marquee--works" data-marquee>
+    <div class="marquee__track" id="works-track">
+      <figure class="work">
+        <img src="./assets/cam-exterior.png" alt="מצלמת חוץ בווילה פרטית" loading="lazy" />
+        <figcaption class="work__cap">מצלמת חוץ · וילה פרטית</figcaption>
+        <div class="work__focus" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+      </figure>
+      <figure class="work">
+        <img src="./assets/works-commercial.png" alt="מערך מצלמות בחזית עסק" loading="lazy" />
+        <figcaption class="work__cap">מערך מצלמות · חזית עסק</figcaption>
+        <div class="work__focus" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+      </figure>
+      <figure class="work">
+        <img src="./assets/works-lpr.png" alt="מצלמת זיהוי לוחית רישוי בכניסה לחניה" loading="lazy" />
+        <figcaption class="work__cap">זיהוי לוחית רישוי · כניסה לחניה</figcaption>
+        <div class="work__focus" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+      </figure>
+      <figure class="work">
+        <img src="./assets/works-indoor.png" alt="מצלמת כיפה בסלון מודרני" loading="lazy" />
+        <figcaption class="work__cap">מצלמת כיפה · סלון</figcaption>
+        <div class="work__focus" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+      </figure>
+      <figure class="work">
+        <img src="./assets/night-vision.png" alt="ראיית לילה בחצר אחורית" loading="lazy" />
+        <figcaption class="work__cap">ראיית לילה · חצר אחורית</figcaption>
+        <div class="work__focus" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+      </figure>
+      <figure class="work">
+        <img src="./assets/install-cabinet.png" alt="ארון תקשורת מסודר" loading="lazy" />
+        <figcaption class="work__cap">ארון תקשורת מסודר</figcaption>
+        <div class="work__focus" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+      </figure>
+    </div>
+    </div>
+  </section>
+
+  <!-- System: floating components -->
+  <section class="section system" id="system">
+    <div class="system__stage">
+      <div class="system__center">
+        <span class="section__kicker" data-reveal>הרכיבים שלנו</span>
+        <h2 class="section__title" data-reveal>מערכת אחת. כל הרכיבים מדברים.</h2>
+        <p class="section__lead" data-reveal style="margin-inline:auto;">
+          מצלמות, גלאים, בקרת כניסה ותקשורת — מתוכננים ומותקנים לעבוד יחד, בלי באלגן.
+        </p>
+      </div>
+      <div class="system__floats">
+        <div class="float" style="top:5%; left:3%;" data-float>
+          <div class="float__inner" style="--dur:4.6s; --delay:0s;">
+            <div class="float__card"><img src="./floating/cctv2.png" alt="מצלמת כיפה" loading="lazy" /></div>
+          </div>
+        </div>
+        <div class="float" style="top:9%; left:75%;" data-float>
+          <div class="float__inner" style="--dur:5.4s; --delay:0.4s;">
+            <div class="float__card"><img src="./floating/cctv.webp" alt="מצלמת אבטחה" loading="lazy" /></div>
+          </div>
+        </div>
+        <div class="float" style="top:40%; left:0%;" data-float>
+          <div class="float__inner" style="--dur:5s; --delay:0.2s;">
+            <div class="float__card"><img src="./floating/1771331663p63UM.png" alt="נקודת WiFi / ראוטר" loading="lazy" /></div>
+          </div>
+        </div>
+        <div class="float" style="top:44%; left:84%;" data-float>
+          <div class="float__inner" style="--dur:5.8s; --delay:0.7s;">
+            <div class="float__card"><img src="./floating/27049_120420221607501_large.png" alt="גלאי נפח" loading="lazy" /></div>
+          </div>
+        </div>
+        <div class="float" style="top:74%; left:10%;" data-float>
+          <div class="float__inner" style="--dur:4.9s; --delay:0.3s;">
+            <div class="float__card"><img src="./floating/cable.png" alt="כבל רשת" loading="lazy" /></div>
+          </div>
+        </div>
+        <div class="float" style="top:72%; left:72%;" data-float>
+          <div class="float__inner" style="--dur:5.6s; --delay:0.1s;">
+            <div class="float__card"><img src="./floating/3930b897859f54e3b681d29fe901ca8a.png" alt="בקרת כניסה" loading="lazy" /></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section class="section about" id="about">
+    <div class="about__grid">
+      <div class="about__media">
+        <div class="media" data-img-wrap data-parallax>
+          <img src="./assets/install-cabinet.png" alt="ארון תקשורת מסודר עם סיבים אופטיים, מתג רשת ומקליט וידאו" loading="lazy" />
+          <div class="media__focus" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+        </div>
+      </div>
+      <div class="about__body">
+        <span class="section__kicker" data-reveal>מאחורי המערכת</span>
+        <h2 class="section__title" data-reveal>אלי — מי שמתקין, גם אחראי.</h2>
+        <p data-reveal>
+          א.א. תקשורת, מיגון ואבטחה נוסדה ב-2016, כשהתחלנו במתן שירותי תשתית לחברות התקשורת
+          הגדולות במשק — מפריסת אינטרנט ועד שירות בבתי הלקוחות. עם השנים גדלנו, והיום אנחנו
+          מתמחים בהתקנת מערכות מיגון ואבטחה למגזר הפרטי והעסקי.
+        </p>
+        <p data-reveal>
+          אני מגיע אליכם להתאמה אישית, נותן מחיר מראש בלי ניחושים, ומבצע עבודה נקייה — בלי
+          כבלים חשופים ובלי בלגן. בסוף ההתקנה אתם מקבלים הסבר מלא על האפליקציה, וממשק מלא בעברית.
+        </p>
+        <div class="about__facts" data-reveal>
+          <div class="fact"><div class="fact__num" data-count="2016" data-plain="1">2016</div><div class="fact__label">פעילים בשטח מאז</div></div>
+          <div class="fact"><div class="fact__num" data-count="24" data-suffix=" שע'">0</div><div class="fact__label">זמן הגעה מרבי</div></div>
+          <div class="fact"><div class="fact__num" data-count="12" data-suffix=" חוד'">0</div><div class="fact__label">אחריות טכנית</div></div>
+          <div class="fact"><div class="fact__num" data-count="127" data-suffix="+">0</div><div class="fact__label">ביקורות בגוגל</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Reviews -->
+  <section class="section reviews" id="reviews">
+    <div class="reviews__head">
+      <div>
+        <span class="section__kicker" data-reveal>לקוחות מספרים</span>
+        <h2 class="section__title" data-reveal>מה שאומרים עלינו בגוגל</h2>
+      </div>
+      <p class="reviews__meta" data-reveal>מבוסס על <b>127 ביקורות</b> · דירוג מעולה</p>
+    </div>
+
+    <div class="marquee marquee--reviews" data-marquee>
+    <div class="marquee__track" id="reviews-track">
+      <article class="review">
+        <p class="review__text">הזמנתי את אלי מגוגל. הגיע בזמן, סבלני, אדיב ומדויק — הקפיד גם על הפרטים הקטנים. מקצוען אמיתי. סגרנו מערכת DVR ומצלמות ומייד התחיל בעבודה במחיר הוגן. ממליץ בחום.</p>
+        <div class="review__who">אמנון</div>
+        <div class="review__date">14/05/2026</div>
+      </article>
+      <article class="review">
+        <p class="review__text">אלי הגיע בזמן, בדק את התשתית הקיימת והמליץ אילו מצלמות להתקין והיכן. באותו יום התקין מערכת שלמה של 4 מצלמות חוץ, מתגים ו-DVR. מקצועי מאוד, ואנחנו מרוצים מאוד מהמערכת. מומלץ בחום!</p>
+        <div class="review__who">Ziv Lutwak</div>
+        <div class="review__date">08/05/2026</div>
+      </article>
+      <article class="review">
+        <p class="review__text">אחרי שבועות של בעיה במערכת במשרד שלא נפתרה, פניתי לאלי. שלח מראש מחירון, הגיע אחרי 40 דקות, פתר את הבעיה והמערכת חזרה לתפקוד באיכות מעולה. מחיר הוגן ביותר. מקצועי מאוד!!</p>
+        <div class="review__who">ran yanuv</div>
+        <div class="review__date">11/05/2026</div>
+      </article>
+      <article class="review">
+        <p class="review__text">חיפשתי תיקון למצלמות של אבי הקשיש. אלי ענה מהר, אמר שהוא 14 דקות ממני, והגיע. בחור סופר מקצועי ונעים, מצא בקלות את הבעיה ועדכן בכל שלב עד שהכל היה מושלם. שירות יעיל ואדיב מאוד, תבורך.</p>
+        <div class="review__who">Maly Zer</div>
+        <div class="review__date">11/05/2026</div>
+      </article>
+      <article class="review">
+        <p class="review__text">טכנאי מקצועי ואמין מאזור מודיעין. עבודה יסודית, נקייה ומדויקת עם ירידה לפרטים הקטנים. הגיע בזמן, הסביר כל שלב ונתן תחושת ביטחון מלאה. המערכת עובדת חלק. ממליץ בחום!</p>
+        <div class="review__who">Nadav Elroy</div>
+        <div class="review__date">10/04/2026</div>
+      </article>
+      <article class="review">
+        <p class="review__text">שירות מהיר, מקצועי ומתחשב בבקשות. עבודה מעולה. ומעל הכל — בן אדם.</p>
+        <div class="review__who">ehud y</div>
+        <div class="review__date">19/04/2026</div>
+      </article>
+      <article class="review">
+        <p class="review__text">מקצועי, מחיר הוגן, והמצלמות מדהימות — רואים מעולה.</p>
+        <div class="review__who">טניה הלפרין</div>
+        <div class="review__date">17/04/2026</div>
+      </article>
+      <article class="review">
+        <p class="review__text">התקין מצלמות בבית הוריי. שירות אדיב, מקצועי, יעיל ומהיר. נתן גם הסבר מפורט על השימוש באפליקציה. ממליץ.</p>
+        <div class="review__who">Gilad Schlesinger</div>
+        <div class="review__date">13/05/2026</div>
+      </article>
+    </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section class="contact" id="contact">
+    <div class="contact__bg">
+      <img src="./assets/dusk-home.png" alt="בית פרטי מודרני בשעת דמדומים עם תאורה חמה" data-parallax loading="lazy" />
+    </div>
+    <div class="contact__grid">
+      <div>
+        <h2 class="contact__title" data-reveal>מוכנים שנשמור עליכם?</h2>
+        <p class="contact__text" data-reveal>
+          השאירו פרטים או חייגו — ואחזור אליכם עם הצעת מחיר מראש, בלי הפתעות בשטח.
+        </p>
+        <a class="contact__phone magnetic" href="tel:0504374571" data-reveal>050-437-4571</a>
+        <p class="contact__detail" data-reveal><b>שעות פעילות:</b> א'–ה' 9:00–17:00 · ו' 8:00–14:00</p>
+        <p class="contact__detail" data-reveal><b>אזור שירות:</b> פריסה ארצית · אזור מודיעין</p>
+        <div class="contact__quick" data-reveal>
+          <a class="btn btn--wa magnetic" href="https://wa.me/972504374571" target="_blank" rel="noopener">שליחת וואטסאפ</a>
+          <a class="btn btn--primary magnetic" href="tel:0504374571">חייגו עכשיו</a>
+        </div>
+      </div>
+
+      <form class="form" data-reveal onsubmit="return false;">
+        <div>
+          <label for="f-name">שם מלא</label>
+          <input id="f-name" type="text" placeholder="איך קוראים לך?" autocomplete="name" />
+        </div>
+        <div>
+          <label for="f-phone">מספר נייד</label>
+          <input id="f-phone" type="tel" placeholder="050-0000000" autocomplete="tel" />
+        </div>
+        <div>
+          <label for="f-email">אימייל</label>
+          <input id="f-email" type="email" placeholder="name@email.com" autocomplete="email" />
+        </div>
+        <div>
+          <label for="f-msg">תוכן ההודעה</label>
+          <textarea id="f-msg" placeholder="ספרו לי בקצרה מה צריך — בית או עסק, כמה מצלמות, ומתי נוח."></textarea>
+        </div>
+        <label class="form__consent">
+          <input type="checkbox" />
+          <span>אני מאשר/ת לחזור אליי בהתאם למדיניות הפרטיות.</span>
+        </label>
+        <button class="btn btn--primary" type="submit">שליחה ותיאום התקנה</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <b>א.א תקשורת, מיגון ואבטחה</b>
+    <span>050-437-4571 · א'–ה' 9:00–17:00, ו' 8:00–14:00 · פריסה ארצית</span>
+    <span>© 2026 כל הזכויות שמורות</span>
+  </footer>
+
+  <script type="module" src="./main.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>
