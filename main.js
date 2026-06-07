@@ -11,17 +11,19 @@ import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
    - Subtle idle breathing + parallax, 60fps loop
    ============================================================ */
 
+const isMobile = window.matchMedia("(max-width: 767px)").matches;
+
 const CONFIG = {
   glbPath: "./cctv_camera.glb",
-  modelTargetSize: 6.0,   // big hero cameras
+  modelTargetSize: isMobile ? 3.4 : 6.0,
   cameraCount: 2,
-  targetDamp: 0.14,       // how fast the shared aim chases the mouse
-  rotDamp: 0.15,          // how fast each camera turns toward its aim (smooth)
-  parallax: 0.2,          // rig sway strength
-  aimRangeX: 3.0,         // max horizontal aim offset (limits rotation, smoothly)
-  aimRangeY: 2.0,         // max vertical aim offset
-  aimDist: 5.0,           // aim plane distance in front (keeps cams facing viewer)
-  fogColor: 0xece6da,     // warm, matches the site paper color
+  targetDamp: 0.14,
+  rotDamp: 0.15,
+  parallax: isMobile ? 0.08 : 0.2,
+  aimRangeX: isMobile ? 1.8 : 3.0,
+  aimRangeY: isMobile ? 1.2 : 2.0,
+  aimDist: 5.0,
+  fogColor: 0xece6da,
 };
 
 // ---------- Renderer ----------
@@ -38,7 +40,7 @@ function heroSize() {
   const h = canvas.clientHeight || (hero && hero.clientHeight) || window.innerHeight;
   return { w, h };
 }
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1.5 : 2));
 {
   const { w, h } = heroSize();
   renderer.setSize(w, h, false); // keep CSS size (canvas fills hero)
@@ -66,7 +68,7 @@ const camera = new THREE.PerspectiveCamera(
   0.1,
   100
 );
-camera.position.set(0, 0, 11.5);
+camera.position.set(0, 0, isMobile ? 10.2 : 11.5);
 
 const cameraRig = new THREE.Group();
 cameraRig.add(camera);
@@ -79,7 +81,7 @@ scene.add(ambient);
 const keyLight = new THREE.DirectionalLight(0xffffff, 2.2);
 keyLight.position.set(-5, 7, 6);
 keyLight.castShadow = true;
-keyLight.shadow.mapSize.set(2048, 2048);
+keyLight.shadow.mapSize.set(isMobile ? 1024 : 2048, isMobile ? 1024 : 2048);
 keyLight.shadow.camera.near = 1;
 keyLight.shadow.camera.far = 40;
 keyLight.shadow.bias = -0.0004;
@@ -103,10 +105,18 @@ const dummy = new THREE.Object3D();
 
 // Two big cameras pushed to the left/right edges, well clear of the
 // centered text. Different heights + depth for a framed, premium feel.
-const LAYOUT = [
-  { pos: [5.0, -1.0, 0.2], scale: 1.0 },    // hero, lower-right, forward
-  { pos: [-5.1, 1.2, -1.2], scale: 0.9 },   // secondary, upper-left, a touch back
+const LAYOUT_DESKTOP = [
+  { pos: [5.0, -1.0, 0.2], scale: 1.0 },
+  { pos: [-5.1, 1.2, -1.2], scale: 0.9 },
 ];
+const LAYOUT_MOBILE = [
+  { pos: [2.8, -2.4, 0.1], scale: 0.82 },
+  { pos: [-2.9, 2.2, -0.8], scale: 0.74 },
+];
+
+function getLayout() {
+  return window.innerWidth < 768 ? LAYOUT_MOBILE : LAYOUT_DESKTOP;
+}
 
 const loader = new GLTFLoader();
 const loaderEl = document.getElementById("loader");
@@ -163,8 +173,9 @@ function prepModel(root) {
 }
 
 function buildCameras(template) {
-  for (let i = 0; i < Math.min(CONFIG.cameraCount, LAYOUT.length); i++) {
-    const conf = LAYOUT[i];
+  const layout = getLayout();
+  for (let i = 0; i < Math.min(CONFIG.cameraCount, layout.length); i++) {
+    const conf = layout[i];
     const obj = template.clone(true);
     obj.position.set(...conf.pos);
     obj.scale.multiplyScalar(conf.scale);
@@ -215,12 +226,28 @@ window.addEventListener(
   { passive: true }
 );
 
+function applyCameraLayout() {
+  const layout = getLayout();
+  const mobile = window.innerWidth < 768;
+  camera.position.z = mobile ? 10.2 : 11.5;
+  cams.forEach((c, i) => {
+    const conf = layout[i];
+    if (!conf) return;
+    c.basePos.set(...conf.pos);
+    c.object.position.set(...conf.pos);
+    c.object.scale.setScalar(conf.scale);
+    c.neutral.set(conf.pos[0] * 0.12, conf.pos[1] * 0.12, CONFIG.aimDist);
+  });
+}
+
 function onResize() {
   const { w, h } = heroSize();
+  const mobile = window.innerWidth < 768;
   camera.aspect = w / h;
   camera.updateProjectionMatrix();
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, mobile ? 1.5 : 2));
   renderer.setSize(w, h, false);
+  if (cams.length) applyCameraLayout();
 }
 window.addEventListener("resize", onResize);
 

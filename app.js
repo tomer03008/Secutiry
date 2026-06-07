@@ -10,12 +10,55 @@
   ).matches;
   const hasGSAP = !!window.gsap;
 
-  /* ---- Nav scrolled state ---- */
+  /* ---- Nav scrolled state + mobile menu ---- */
   const nav = document.getElementById("nav");
+  const navToggle = document.getElementById("nav-toggle");
+  const navBackdrop = document.getElementById("nav-backdrop");
+  const navMenu = document.getElementById("nav-menu");
+
+  function closeNav() {
+    if (!nav) return;
+    nav.classList.remove("is-open");
+    if (navToggle) navToggle.setAttribute("aria-expanded", "false");
+    if (navBackdrop) {
+      navBackdrop.classList.remove("is-visible");
+      navBackdrop.hidden = true;
+    }
+    document.body.style.overflow = "";
+  }
+
+  function openNav() {
+    if (!nav) return;
+    nav.classList.add("is-open");
+    if (navToggle) navToggle.setAttribute("aria-expanded", "true");
+    if (navBackdrop) {
+      navBackdrop.hidden = false;
+      requestAnimationFrame(() => navBackdrop.classList.add("is-visible"));
+    }
+    document.body.style.overflow = "hidden";
+  }
+
   if (nav) {
     const onScroll = () => nav.classList.toggle("is-scrolled", window.scrollY > 40);
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
+  }
+
+  if (navToggle && navMenu) {
+    navToggle.addEventListener("click", () => {
+      if (nav.classList.contains("is-open")) closeNav();
+      else openNav();
+    });
+    navMenu.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", closeNav);
+    });
+    if (navBackdrop) navBackdrop.addEventListener("click", closeNav);
+    window.addEventListener("resize", () => {
+      if (window.innerWidth > 900) closeNav();
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeNav();
+    });
   }
 
   /* ---- Seamless loops: ticker + auto marquees (no manual scroll) ---- */
