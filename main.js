@@ -25,7 +25,7 @@ async function initHero3D() {
     aimRangeX: 3.0,
     aimRangeY: 2.0,
     aimDist: 5.0,
-    fogColor: 0xece6da,
+    fogColor: 0xebe9e4,
   };
 
   const LAYOUT = [
@@ -267,9 +267,9 @@ function makeGradientBackground(THREE) {
   c.height = 256;
   const ctx = c.getContext("2d");
   const grad = ctx.createLinearGradient(0, 0, 0, 256);
-  grad.addColorStop(0, "#faf7f0");
-  grad.addColorStop(0.6, "#f4f1ea");
-  grad.addColorStop(1, "#e8e1d3");
+  grad.addColorStop(0, "#f8f7f4");
+  grad.addColorStop(0.6, "#f6f5f2");
+  grad.addColorStop(1, "#ebe9e4");
   ctx.fillStyle = grad;
   ctx.fillRect(0, 0, 16, 256);
   const tex = new THREE.CanvasTexture(c);
