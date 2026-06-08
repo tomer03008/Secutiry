@@ -165,7 +165,7 @@
     gsap.registerPlugin(ScrollTrigger);
 
     gsap.utils.toArray("[data-reveal]").forEach((el) => {
-      if (el.classList.contains("service")) return;
+      if (el.classList.contains("service-card")) return;
       gsap.to(el, {
         opacity: 1,
         y: 0,
@@ -175,15 +175,15 @@
       });
     });
 
-    const servicesList = document.querySelector(".services__list");
-    if (servicesList) {
-      gsap.to(".service", {
+    const servicesCards = document.querySelector(".services__cards");
+    if (servicesCards) {
+      gsap.to(".service-card", {
         opacity: 1,
         y: 0,
-        duration: 0.75,
-        stagger: 0.08,
+        duration: 0.65,
+        stagger: 0.06,
         ease: "power3.out",
-        scrollTrigger: { trigger: servicesList, start: "top 82%" },
+        scrollTrigger: { trigger: servicesCards, start: "top 82%" },
       });
     }
 
