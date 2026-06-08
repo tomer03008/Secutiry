@@ -1,14 +1,6 @@
-/* Hero: static product images on mobile, Three.js scene on desktop */
+/* Hero: Three.js scene — desktop only (mobile loads static hero image) */
 
-const MOBILE_HERO = window.matchMedia("(max-width: 900px)");
-
-if (MOBILE_HERO.matches) {
-  document.documentElement.classList.add("hero-static");
-  const visual = document.querySelector(".hero__mobile-visual");
-  if (visual) visual.removeAttribute("aria-hidden");
-} else {
-  initHero3D();
-}
+initHero3D();
 
 async function initHero3D() {
   const THREE = await import("three");

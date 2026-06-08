@@ -1,14 +1,10 @@
-/* Interaction & motion layer — premium, cohesive, with safe fallbacks.
-   Plain-JS features (rotator, drag, counters, magnetic) work without GSAP.
-   GSAP drives the scroll-linked reveals / parallax when available. */
+/* Core interactions + optional GSAP (desktop only). Mobile uses lite mode. */
 (function () {
   "use strict";
 
   const docEl = document.documentElement;
-  const prefersReduced = window.matchMedia(
-    "(prefers-reduced-motion: reduce)"
-  ).matches;
-  const hasGSAP = !!window.gsap;
+  const isLite = docEl.classList.contains("lite");
+  const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   /* ---- Nav scrolled state + mobile menu ---- */
   const nav = document.getElementById("nav");
@@ -49,9 +45,7 @@
       if (nav.classList.contains("is-open")) closeNav();
       else openNav();
     });
-    navMenu.querySelectorAll("a").forEach((link) => {
-      link.addEventListener("click", closeNav);
-    });
+    navMenu.querySelectorAll("a").forEach((link) => link.addEventListener("click", closeNav));
     if (navBackdrop) navBackdrop.addEventListener("click", closeNav);
     window.addEventListener("resize", () => {
       if (window.innerWidth > 900) closeNav();
@@ -61,9 +55,9 @@
     });
   }
 
-  /* ---- Seamless loops: ticker + auto marquees (no manual scroll) ---- */
+  /* ---- Ticker + marquees ---- */
   const ticker = document.getElementById("ticker");
-  if (ticker) ticker.innerHTML += ticker.innerHTML;
+  if (ticker && !prefersReduced) ticker.innerHTML += ticker.innerHTML;
 
   document.querySelectorAll("[data-marquee] .marquee__track").forEach((track) => {
     track.innerHTML += track.innerHTML;
@@ -105,12 +99,15 @@
       },
       { threshold: 0.4 }
     );
-    counters.forEach((el) => { if (!el.dataset.plain) io.observe(el); });
+    counters.forEach((el) => {
+      if (!el.dataset.plain) io.observe(el);
+    });
   }
+
   function countUp(el) {
     const target = parseInt(el.dataset.count, 10) || 0;
     const suffix = el.dataset.suffix || "";
-    const dur = 1300;
+    const dur = isLite ? 900 : 1300;
     const t0 = performance.now();
     function step(t) {
       const p = Math.min((t - t0) / dur, 1);
@@ -121,8 +118,14 @@
     requestAnimationFrame(step);
   }
 
-  /* ---- Magnetic buttons (subtle, single signature micro-interaction) ---- */
-  if (!prefersReduced && window.matchMedia("(pointer:fine)").matches) {
+  /* ---- Mobile lite: skip heavy animation libs ---- */
+  if (isLite || prefersReduced) {
+    docEl.classList.remove("js");
+    return;
+  }
+
+  /* ---- Magnetic buttons (desktop pointer only) ---- */
+  if (window.matchMedia("(pointer:fine)").matches) {
     document.querySelectorAll(".magnetic").forEach((el) => {
       el.addEventListener("pointermove", (e) => {
         const rct = el.getBoundingClientRect();
@@ -130,128 +133,137 @@
         const my = e.clientY - (rct.top + rct.height / 2);
         el.style.transform = `translate(${mx * 0.22}px, ${my * 0.34}px)`;
       });
-      el.addEventListener("pointerleave", () => { el.style.transform = ""; });
+      el.addEventListener("pointerleave", () => {
+        el.style.transform = "";
+      });
     });
   }
 
-  /* ---- GSAP scroll-linked reveals / parallax ---- */
-  if (!hasGSAP || prefersReduced) {
-    // Fallback: cancel CSS initial hidden states so everything is visible.
-    docEl.classList.remove("js");
-    return;
-  }
+  /* ---- GSAP (desktop only, loaded on demand) ---- */
+  loadScript("https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js")
+    .then(() => loadScript("https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"))
+    .then(initGSAP)
+    .catch(() => docEl.classList.remove("js"));
 
-  gsap.registerPlugin(ScrollTrigger);
-
-  // Generic reveals (text, blocks) — services get a dedicated stagger below
-  gsap.utils.toArray("[data-reveal]").forEach((el) => {
-    if (el.classList.contains("service")) return;
-    gsap.to(el, {
-      opacity: 1,
-      y: 0,
-      duration: 1,
-      ease: "power3.out",
-      scrollTrigger: { trigger: el, start: "top 86%" },
-    });
-  });
-
-  // Services: cascade in one after another
-  const servicesList = document.querySelector(".services__list");
-  if (servicesList) {
-    gsap.to(".service", {
-      opacity: 1,
-      y: 0,
-      duration: 0.75,
-      stagger: 0.08,
-      ease: "power3.out",
-      scrollTrigger: { trigger: servicesList, start: "top 82%" },
+  function loadScript(src) {
+    return new Promise((resolve, reject) => {
+      const s = document.createElement("script");
+      s.src = src;
+      s.async = true;
+      s.onload = resolve;
+      s.onerror = reject;
+      document.head.appendChild(s);
     });
   }
 
-  // Marquee sections fade/slide in when they enter view
-  gsap.utils.toArray("[data-marquee]").forEach((el) => {
-    gsap.from(el, {
-      opacity: 0,
-      y: 36,
-      duration: 1,
-      ease: "power3.out",
-      scrollTrigger: { trigger: el, start: "top 88%" },
+  function initGSAP() {
+    if (!window.gsap) {
+      docEl.classList.remove("js");
+      return;
+    }
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    gsap.utils.toArray("[data-reveal]").forEach((el) => {
+      if (el.classList.contains("service")) return;
+      gsap.to(el, {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: "power3.out",
+        scrollTrigger: { trigger: el, start: "top 86%" },
+      });
     });
-  });
 
-  // Image clip reveals + de-scale
-  gsap.utils.toArray("[data-img-wrap]").forEach((w) => {
-    const img = w.querySelector("img");
-    const tl = gsap.timeline({ scrollTrigger: { trigger: w, start: "top 84%" } });
-    tl.to(w, { clipPath: "inset(0 0 0% 0)", duration: 1.1, ease: "power3.out" });
-    if (img) tl.to(img, { scale: 1, duration: 1.3, ease: "power3.out" }, 0);
-  });
+    const servicesList = document.querySelector(".services__list");
+    if (servicesList) {
+      gsap.to(".service", {
+        opacity: 1,
+        y: 0,
+        duration: 0.75,
+        stagger: 0.08,
+        ease: "power3.out",
+        scrollTrigger: { trigger: servicesList, start: "top 82%" },
+      });
+    }
 
-  // Parallax on full-bleed background images
-  gsap.utils.toArray("img[data-parallax]").forEach((img) => {
-    gsap.fromTo(
-      img,
-      { yPercent: -8 },
-      {
-        yPercent: 8,
-        ease: "none",
-        scrollTrigger: {
-          trigger: img.closest("section") || img,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: true,
-        },
-      }
-    );
-  });
-
-  // Hero content drifts up + fades as you scroll past (parent only — children
-  // keep their own entrance animation, so no conflict)
-  const heroContent = document.querySelector("[data-hero]");
-  if (heroContent && window.matchMedia("(min-width: 901px)").matches) {
-    gsap.to(heroContent, {
-      yPercent: -16,
-      opacity: 0,
-      ease: "none",
-      scrollTrigger: {
-        trigger: ".hero",
-        start: "top top",
-        end: "bottom top",
-        scrub: true,
-      },
+    gsap.utils.toArray("[data-marquee]").forEach((el) => {
+      gsap.from(el, {
+        opacity: 0,
+        y: 36,
+        duration: 1,
+        ease: "power3.out",
+        scrollTrigger: { trigger: el, start: "top 88%" },
+      });
     });
-  }
 
-  // Floating system components: gentle scroll parallax (desktop) + fade-in.
-  const floats = gsap.utils.toArray("[data-float]");
-  const allowFloatParallax = window.matchMedia("(min-width: 761px)").matches;
-  floats.forEach((el, i) => {
-    gsap.from(el, {
-      opacity: 0,
-      duration: 0.8,
-      ease: "power2.out",
-      delay: i * 0.06,
-      scrollTrigger: { trigger: ".system", start: "top 72%" },
+    gsap.utils.toArray("[data-img-wrap]").forEach((w) => {
+      const img = w.querySelector("img");
+      const tl = gsap.timeline({ scrollTrigger: { trigger: w, start: "top 84%" } });
+      tl.to(w, { clipPath: "inset(0 0 0% 0)", duration: 1.1, ease: "power3.out" });
+      if (img) tl.to(img, { scale: 1, duration: 1.3, ease: "power3.out" }, 0);
     });
-    if (allowFloatParallax) {
-      const dir = i % 2 === 0 ? -1 : 1;
+
+    gsap.utils.toArray("img[data-parallax]").forEach((img) => {
       gsap.fromTo(
-        el,
-        { yPercent: dir * -16 },
+        img,
+        { yPercent: -8 },
         {
-          yPercent: dir * 16,
+          yPercent: 8,
           ease: "none",
           scrollTrigger: {
-            trigger: ".system",
+            trigger: img.closest("section") || img,
             start: "top bottom",
             end: "bottom top",
             scrub: true,
           },
         }
       );
-    }
-  });
+    });
 
-  // Recompute after fonts / lazy images settle
-  window.addEventListener("load", () => ScrollTrigger.refresh());
+    const heroContent = document.querySelector("[data-hero]");
+    if (heroContent && window.matchMedia("(min-width: 901px)").matches) {
+      gsap.to(heroContent, {
+        yPercent: -16,
+        opacity: 0,
+        ease: "none",
+        scrollTrigger: {
+          trigger: ".hero",
+          start: "top top",
+          end: "bottom top",
+          scrub: true,
+        },
+      });
+    }
+
+    const floats = gsap.utils.toArray("[data-float]");
+    floats.forEach((el, i) => {
+      gsap.from(el, {
+        opacity: 0,
+        duration: 0.8,
+        ease: "power2.out",
+        delay: i * 0.06,
+        scrollTrigger: { trigger: ".system", start: "top 72%" },
+      });
+      if (window.matchMedia("(min-width: 761px)").matches) {
+        const dir = i % 2 === 0 ? -1 : 1;
+        gsap.fromTo(
+          el,
+          { yPercent: dir * -16 },
+          {
+            yPercent: dir * 16,
+            ease: "none",
+            scrollTrigger: {
+              trigger: ".system",
+              start: "top bottom",
+              end: "bottom top",
+              scrub: true,
+            },
+          }
+        );
+      }
+    });
+
+    window.addEventListener("load", () => ScrollTrigger.refresh());
+  }
 })();
