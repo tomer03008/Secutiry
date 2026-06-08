@@ -651,7 +651,7 @@ html.lite .float__inner { animation: none !important; }
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center 28%;
+    object-position: 68% 38%;
   }
   .hero__mobile-shade {
     position: absolute;
