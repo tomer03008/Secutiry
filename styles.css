@@ -153,16 +153,37 @@ img { display: block; max-width: 100%; }
   overflow: hidden;
 }
 
-#scene { position: absolute; inset: 0; width: 100%; height: 100%; display: block; z-index: 1; }
+.hero__stage {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+}
+
+#scene {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
 
 .hero__scrim {
-  position: absolute; inset: 0; z-index: 2; pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
   background: radial-gradient(46% 64% at 50% 48%, rgba(244, 241, 234, 0.9) 0%, rgba(244, 241, 234, 0) 72%);
 }
 
 .hero__content {
-  position: absolute; inset: 0; z-index: 3;
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   text-align: center;
   padding: calc(72px + var(--safe-top)) var(--pad-x) calc(48px + var(--safe-bottom));
 }
@@ -520,18 +541,81 @@ img { display: block; max-width: 100%; }
     -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2'%3E%3Cpath d='M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z'/%3E%3C/svg%3E") center / contain no-repeat;
   }
 
-  .hero { min-height: 480px; }
-  .hero__scrim {
-    background: radial-gradient(72% 58% at 50% 42%, rgba(244, 241, 234, 0.94) 0%, rgba(244, 241, 234, 0.55) 55%, rgba(244, 241, 234, 0) 100%);
+  /* Mobile hero: cameras on top, text below — nothing covers the 3D scene */
+  .hero {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    min-height: 100dvh;
+    overflow: visible;
   }
-  .hero__title { font-size: clamp(32px, 9.5vw, 48px); max-width: 12ch; margin-bottom: 16px; }
-  .hero__sub { font-size: 1rem; margin-bottom: 28px; line-height: 1.55; }
-  .hero__cta { width: 100%; max-width: 360px; flex-direction: column; gap: 12px; }
-  .hero__cta .btn { width: 100%; padding: 14px 20px; }
-  .hero__trust { font-size: 0.85rem; line-height: 1.5; max-width: 34ch; }
-  .hero__kicker { flex-wrap: wrap; justify-content: center; margin-bottom: 16px; font-size: 0.85rem; }
-  .hero__rotator { min-width: min(16em, calc(100vw - 120px)); height: 1.6em; }
-  .hero__scrollcue { inset-block-end: calc(14px + var(--safe-bottom)); font-size: 0.75rem; }
+  .hero__stage {
+    position: relative;
+    inset: auto;
+    flex: none;
+    width: 100%;
+    height: clamp(300px, 44dvh, 400px);
+    margin-top: calc(56px + var(--safe-top));
+    background: linear-gradient(180deg, var(--paper-2) 0%, var(--paper) 100%);
+    border-block-end: 1px solid var(--line);
+  }
+  .hero__scrim {
+    background: linear-gradient(
+      180deg,
+      rgba(244, 241, 234, 0) 0%,
+      rgba(244, 241, 234, 0.08) 70%,
+      rgba(244, 241, 234, 0.35) 100%
+    );
+  }
+  .hero__content {
+    position: relative;
+    inset: auto;
+    flex: 1;
+    justify-content: flex-start;
+    padding: 28px var(--pad-x) 16px;
+    background: var(--paper);
+  }
+  .hero__title {
+    font-size: clamp(30px, 8.8vw, 44px);
+    max-width: 11ch;
+    margin-bottom: 14px;
+    line-height: 1.08;
+  }
+  .hero__sub {
+    font-size: 0.98rem;
+    margin-bottom: 22px;
+    line-height: 1.55;
+    max-width: 36ch;
+  }
+  .hero__cta {
+    width: 100%;
+    max-width: 100%;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+  .hero__cta .btn { width: 100%; padding: 15px 20px; }
+  .hero__trust {
+    font-size: 0.82rem;
+    line-height: 1.55;
+    max-width: 32ch;
+    color: var(--muted);
+  }
+  .hero__kicker {
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 12px;
+    font-size: 0.82rem;
+  }
+  .hero__rotator { min-width: min(15em, calc(100vw - 80px)); height: 1.55em; }
+  .hero__scrollcue {
+    position: relative;
+    inset: auto;
+    flex: none;
+    padding: 8px var(--pad-x) calc(18px + var(--safe-bottom));
+    font-size: 0.72rem;
+    background: var(--paper);
+  }
 
   .ticker { padding: 14px 0; }
   .ticker__item { font-size: 1rem; padding: 0 18px; gap: 18px; }

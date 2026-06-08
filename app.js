@@ -208,7 +208,7 @@
   // Hero content drifts up + fades as you scroll past (parent only — children
   // keep their own entrance animation, so no conflict)
   const heroContent = document.querySelector("[data-hero]");
-  if (heroContent) {
+  if (heroContent && window.matchMedia("(min-width: 901px)").matches) {
     gsap.to(heroContent, {
       yPercent: -16,
       opacity: 0,
