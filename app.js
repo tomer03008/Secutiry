@@ -165,7 +165,7 @@
     gsap.registerPlugin(ScrollTrigger);
 
     gsap.utils.toArray("[data-reveal]").forEach((el) => {
-      if (el.classList.contains("service-card")) return;
+      if (el.classList.contains("svc-block")) return;
       gsap.to(el, {
         opacity: 1,
         y: 0,
@@ -175,15 +175,15 @@
       });
     });
 
-    const servicesCards = document.querySelector(".services__cards");
-    if (servicesCards) {
-      gsap.to(".service-card", {
+    const servicesTimeline = document.querySelector(".services__timeline");
+    if (servicesTimeline) {
+      gsap.to(".svc-block", {
         opacity: 1,
         y: 0,
-        duration: 0.65,
-        stagger: 0.06,
+        duration: 0.7,
+        stagger: 0.14,
         ease: "power3.out",
-        scrollTrigger: { trigger: servicesCards, start: "top 82%" },
+        scrollTrigger: { trigger: servicesTimeline, start: "top 82%" },
       });
     }
 
