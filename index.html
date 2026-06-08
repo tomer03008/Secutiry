@@ -18,7 +18,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="./styles.css?v=5" />
+  <link rel="stylesheet" href="./styles.css?v=6" />
   <link rel="preload" as="image" href="./assets/hero-mob-sm.webp?v=3" type="image/webp" media="(max-width: 900px)" fetchpriority="high" />
 </head>
 <body>
@@ -103,103 +103,116 @@
       </p>
     </div>
 
-    <nav class="services__chips" aria-label="קטגוריות שירות" data-reveal>
-      <a class="services__chip" href="#svc-security">אבטחה · 01–03</a>
-      <a class="services__chip" href="#svc-comm">תקשורת · 04–08</a>
-      <a class="services__chip" href="#svc-service">שירות · 09</a>
-    </nav>
+    <div class="services__stage" data-reveal>
+      <div class="services__aurora" aria-hidden="true"><i></i><i></i><i></i></div>
 
-    <div class="services__timeline">
-      <section class="svc-block svc-block--security" id="svc-security" data-reveal>
-        <header class="svc-block__head">
-          <span class="svc-block__range">01–03</span>
-          <h3 class="svc-block__title">אבטחה ומיגון</h3>
-        </header>
-        <div class="svc-block__steps">
-          <article class="svc-step">
-            <span class="svc-step__num">01</span>
-            <div class="svc-step__body">
-              <h4 class="svc-step__title">מצלמות אנליטיקה מבוססות בינה מלאכותית</h4>
-              <p class="svc-step__desc">זיהוי אובייקטים חכם והתראות מדויקות — פחות התראות שווא, יותר שקט.</p>
-            </div>
-          </article>
-          <article class="svc-step">
-            <span class="svc-step__num">02</span>
-            <div class="svc-step__body">
-              <h4 class="svc-step__title">מצלמות בטכנולוגיית LPR</h4>
-              <p class="svc-step__desc">זיהוי לוחיות רישוי לכניסות, חניונים ועסקים.</p>
-            </div>
-          </article>
-          <article class="svc-step">
-            <span class="svc-step__num">03</span>
-            <div class="svc-step__body">
-              <h4 class="svc-step__title">מצלמות גלויות או סמויות במעגל סגור</h4>
-              <p class="svc-step__desc">מערכות יציבות שלא מתנתקות, בהתאמה לבית או לעסק.</p>
-            </div>
-          </article>
-        </div>
-      </section>
+      <nav class="services__chips" aria-label="קטגוריות שירות">
+        <a class="services__chip is-active" href="#svc-security" data-svc-chip="security">אבטחה</a>
+        <a class="services__chip" href="#svc-comm" data-svc-chip="comm">תקשורת</a>
+        <a class="services__chip" href="#svc-service" data-svc-chip="service">שירות</a>
+      </nav>
 
-      <section class="svc-block svc-block--comm" id="svc-comm" data-reveal>
-        <header class="svc-block__head">
-          <span class="svc-block__range">04–08</span>
-          <h3 class="svc-block__title">תקשורת ותשתיות</h3>
-        </header>
-        <div class="svc-block__steps">
-          <article class="svc-step">
-            <span class="svc-step__num">04</span>
-            <div class="svc-step__body">
-              <h4 class="svc-step__title">תשתיות אינטרנט וסיבים אופטיים</h4>
-              <p class="svc-step__desc">פריסת תשתית לבית ולעסק, בעבודה מסודרת ונקייה.</p>
-            </div>
-          </article>
-          <article class="svc-step">
-            <span class="svc-step__num">05</span>
-            <div class="svc-step__body">
-              <h4 class="svc-step__title">פתרונות WiFi בטכנולוגיית MESH</h4>
-              <p class="svc-step__desc">מגדילי טווח וכיסוי מלא בכל פינה בבית או במשרד.</p>
-            </div>
-          </article>
-          <article class="svc-step">
-            <span class="svc-step__num">06</span>
-            <div class="svc-step__body">
-              <h4 class="svc-step__title">ארונות תקשורת, תעלות ורכזות</h4>
-              <p class="svc-step__desc">סידור והתקנת ארונות תקשורת, שקעי אינטרנט וטלפוניה.</p>
-            </div>
-          </article>
-          <article class="svc-step">
-            <span class="svc-step__num">07</span>
-            <div class="svc-step__body">
-              <h4 class="svc-step__title">שקעי אינטרנט, רכזות ושקעי טלפוניה</h4>
-              <p class="svc-step__desc">תוספת נקודות רשת וטלפון בבית ובעסק, מסודר ונקי.</p>
-            </div>
-          </article>
-          <article class="svc-step">
-            <span class="svc-step__num">08</span>
-            <div class="svc-step__body">
-              <h4 class="svc-step__title">התקנת סטרימרים Android TV</h4>
-              <p class="svc-step__desc">תמיכה באפליקציות של חברות התקשורת, מוכן לשימוש.</p>
-            </div>
-          </article>
-        </div>
-      </section>
+      <div class="services__mosaic">
+        <article class="svc-tile svc-tile--hero svc-tile--security" id="svc-security" data-svc-reveal data-cat="security" style="--bg: url('./assets/cam-exterior.png')">
+          <div class="svc-tile__glow"></div>
+          <div class="svc-tile__bg" aria-hidden="true"></div>
+          <div class="svc-tile__content">
+            <span class="svc-tile__num">01</span>
+            <span class="svc-tile__cat">אבטחה</span>
+            <h3 class="svc-tile__title">מצלמות אנליטיקה מבוססות בינה מלאכותית</h3>
+            <p class="svc-tile__desc">זיהוי אובייקטים חכם והתראות מדויקות — פחות התראות שווא, יותר שקט.</p>
+          </div>
+        </article>
 
-      <section class="svc-block svc-block--service" id="svc-service" data-reveal>
-        <header class="svc-block__head">
-          <span class="svc-block__range">09</span>
-          <h3 class="svc-block__title">שירות מהיר</h3>
-        </header>
-        <div class="svc-block__steps">
-          <article class="svc-step svc-step--highlight">
-            <span class="svc-step__num">09</span>
-            <div class="svc-step__body">
-              <h4 class="svc-step__title">תיקון ושדרוג מערכות קיימות — מהיום להיום</h4>
-              <p class="svc-step__desc">S.O.S למצלמות שקרסו, ושדרוג מערכות ישנות למתקדמות.</p>
-              <p class="svc-step__meta">התקנה תוך 24 שעות · מחיר מראש · אחריות 12 חודשים</p>
-            </div>
-          </article>
-        </div>
-      </section>
+        <article class="svc-tile svc-tile--security" data-svc-reveal data-cat="security" style="--bg: url('./assets/works-lpr.png')">
+          <div class="svc-tile__glow"></div>
+          <div class="svc-tile__bg" aria-hidden="true"></div>
+          <div class="svc-tile__content">
+            <span class="svc-tile__num">02</span>
+            <span class="svc-tile__cat">אבטחה</span>
+            <h3 class="svc-tile__title">מצלמות בטכנולוגיית LPR</h3>
+            <p class="svc-tile__desc">זיהוי לוחיות רישוי לכניסות, חניונים ועסקים.</p>
+          </div>
+        </article>
+
+        <article class="svc-tile svc-tile--security" data-svc-reveal data-cat="security" style="--bg: url('./assets/works-commercial.png')">
+          <div class="svc-tile__glow"></div>
+          <div class="svc-tile__bg" aria-hidden="true"></div>
+          <div class="svc-tile__content">
+            <span class="svc-tile__num">03</span>
+            <span class="svc-tile__cat">אבטחה</span>
+            <h3 class="svc-tile__title">מצלמות גלויות או סמויות במעגל סגור</h3>
+            <p class="svc-tile__desc">מערכות יציבות שלא מתנתקות, בהתאמה לבית או לעסק.</p>
+          </div>
+        </article>
+
+        <article class="svc-tile svc-tile--comm" id="svc-comm" data-svc-reveal data-cat="comm" style="--bg: url('./assets/install-cabinet.png')">
+          <div class="svc-tile__glow"></div>
+          <div class="svc-tile__bg" aria-hidden="true"></div>
+          <div class="svc-tile__content">
+            <span class="svc-tile__num">04</span>
+            <span class="svc-tile__cat">תקשורת</span>
+            <h3 class="svc-tile__title">תשתיות אינטרנט וסיבים אופטיים</h3>
+            <p class="svc-tile__desc">פריסת תשתית לבית ולעסק, בעבודה מסודרת ונקייה.</p>
+          </div>
+        </article>
+
+        <article class="svc-tile svc-tile--comm" data-svc-reveal data-cat="comm" style="--bg: url('./assets/dusk-home.png')">
+          <div class="svc-tile__glow"></div>
+          <div class="svc-tile__bg" aria-hidden="true"></div>
+          <div class="svc-tile__content">
+            <span class="svc-tile__num">05</span>
+            <span class="svc-tile__cat">תקשורת</span>
+            <h3 class="svc-tile__title">פתרונות WiFi בטכנולוגיית MESH</h3>
+            <p class="svc-tile__desc">מגדילי טווח וכיסוי מלא בכל פינה בבית או במשרד.</p>
+          </div>
+        </article>
+
+        <article class="svc-tile svc-tile--comm" data-svc-reveal data-cat="comm" style="--bg: url('./assets/install-cabinet.png')">
+          <div class="svc-tile__glow"></div>
+          <div class="svc-tile__bg" aria-hidden="true"></div>
+          <div class="svc-tile__content">
+            <span class="svc-tile__num">06</span>
+            <span class="svc-tile__cat">תקשורת</span>
+            <h3 class="svc-tile__title">ארונות תקשורת, תעלות ורכזות</h3>
+            <p class="svc-tile__desc">סידור והתקנת ארונות תקשורת, שקעי אינטרנט וטלפוניה.</p>
+          </div>
+        </article>
+
+        <article class="svc-tile svc-tile--comm" data-svc-reveal data-cat="comm" style="--bg: url('./assets/works-indoor.png')">
+          <div class="svc-tile__glow"></div>
+          <div class="svc-tile__bg" aria-hidden="true"></div>
+          <div class="svc-tile__content">
+            <span class="svc-tile__num">07</span>
+            <span class="svc-tile__cat">תקשורת</span>
+            <h3 class="svc-tile__title">שקעי אינטרנט, רכזות ושקעי טלפוניה</h3>
+            <p class="svc-tile__desc">תוספת נקודות רשת וטלפון בבית ובעסק, מסודר ונקי.</p>
+          </div>
+        </article>
+
+        <article class="svc-tile svc-tile--comm" data-svc-reveal data-cat="comm" style="--bg: url('./assets/works-indoor.png')">
+          <div class="svc-tile__glow"></div>
+          <div class="svc-tile__bg" aria-hidden="true"></div>
+          <div class="svc-tile__content">
+            <span class="svc-tile__num">08</span>
+            <span class="svc-tile__cat">תקשורת</span>
+            <h3 class="svc-tile__title">התקנת סטרימרים Android TV</h3>
+            <p class="svc-tile__desc">תמיכה באפליקציות של חברות התקשורת, מוכן לשימוש.</p>
+          </div>
+        </article>
+
+        <article class="svc-tile svc-tile--finale svc-tile--service" id="svc-service" data-svc-reveal data-cat="service" style="--bg: url('./assets/night-vision.png')">
+          <div class="svc-tile__glow"></div>
+          <div class="svc-tile__bg" aria-hidden="true"></div>
+          <div class="svc-tile__content">
+            <span class="svc-tile__num">09</span>
+            <span class="svc-tile__cat">שירות</span>
+            <h3 class="svc-tile__title">תיקון ושדרוג מערכות קיימות — מהיום להיום</h3>
+            <p class="svc-tile__desc">S.O.S למצלמות שקרסו, ושדרוג מערכות ישנות למתקדמות.</p>
+            <p class="svc-tile__meta">התקנה תוך 24 שעות · מחיר מראש · אחריות 12 חודשים</p>
+          </div>
+        </article>
+      </div>
     </div>
 
     <div class="services__cta" data-reveal>

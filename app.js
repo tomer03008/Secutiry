@@ -118,6 +118,61 @@
     requestAnimationFrame(step);
   }
 
+  /* ---- Services mosaic reveal (mobile + desktop) ---- */
+  initServiceMosaic();
+
+  function initServiceMosaic() {
+    const tiles = document.querySelectorAll("[data-svc-reveal]");
+    const chips = document.querySelectorAll("[data-svc-chip]");
+
+    if (tiles.length) {
+      if (prefersReduced) {
+        tiles.forEach((el) => el.classList.add("is-visible"));
+      } else {
+        const tileIO = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((en) => {
+              if (en.isIntersecting) {
+                en.target.classList.add("is-visible");
+                tileIO.unobserve(en.target);
+              }
+            });
+          },
+          { threshold: 0.1, rootMargin: "0px 0px -6% 0px" }
+        );
+        tiles.forEach((el, i) => {
+          el.style.setProperty("--svc-delay", `${(i % 5) * 0.08}s`);
+          tileIO.observe(el);
+        });
+      }
+    }
+
+    if (chips.length) {
+      chips.forEach((chip) => {
+        chip.addEventListener("click", () => {
+          chips.forEach((c) => c.classList.remove("is-active"));
+          chip.classList.add("is-active");
+        });
+      });
+
+      const catTiles = document.querySelectorAll(".svc-tile[data-cat]");
+      if (catTiles.length && !prefersReduced) {
+        const chipIO = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((en) => {
+              if (en.isIntersecting) {
+                const cat = en.target.dataset.cat;
+                chips.forEach((c) => c.classList.toggle("is-active", c.dataset.svcChip === cat));
+              }
+            });
+          },
+          { threshold: 0.25, rootMargin: "-15% 0px -50% 0px" }
+        );
+        catTiles.forEach((t) => chipIO.observe(t));
+      }
+    }
+  }
+
   /* ---- Mobile lite: skip heavy animation libs ---- */
   if (isLite || prefersReduced) {
     docEl.classList.remove("js");
@@ -165,7 +220,7 @@
     gsap.registerPlugin(ScrollTrigger);
 
     gsap.utils.toArray("[data-reveal]").forEach((el) => {
-      if (el.classList.contains("svc-block")) return;
+      if (el.hasAttribute("data-svc-reveal")) return;
       gsap.to(el, {
         opacity: 1,
         y: 0,
@@ -174,18 +229,6 @@
         scrollTrigger: { trigger: el, start: "top 86%" },
       });
     });
-
-    const servicesTimeline = document.querySelector(".services__timeline");
-    if (servicesTimeline) {
-      gsap.to(".svc-block", {
-        opacity: 1,
-        y: 0,
-        duration: 0.7,
-        stagger: 0.14,
-        ease: "power3.out",
-        scrollTrigger: { trigger: servicesTimeline, start: "top 82%" },
-      });
-    }
 
     gsap.utils.toArray("[data-marquee]").forEach((el) => {
       gsap.from(el, {
